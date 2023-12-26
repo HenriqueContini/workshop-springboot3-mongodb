@@ -1,5 +1,6 @@
 package com.estudos.workshop_spring_mongo.resources;
 
+import com.estudos.workshop_spring_mongo.domain.Post;
 import com.estudos.workshop_spring_mongo.domain.User;
 import com.estudos.workshop_spring_mongo.dto.UserDTO;
 import com.estudos.workshop_spring_mongo.services.UserService;
@@ -27,6 +28,12 @@ public class UserResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         return ResponseEntity.ok().body(new UserDTO(service.findById(id)));
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 
     @PostMapping
